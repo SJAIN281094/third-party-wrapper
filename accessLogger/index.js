@@ -10,28 +10,38 @@ const accessLogger = ({
     fileName: "access.log",
     interval: "1d",
     format: "combined",
-    enableRotateFile: true,
+    rotateFiles: false,
   },
 }) => {
-  let accessLogStream;
-
-  if (type === "file") {
-    if (options.enableRotateFile) {
-      // Create new log file on every interval
-      accessLogStream = createStream(options.fileName, {
-        interval: options.interval,
-        path: path.resolve(filepath),
-      });
-    } else {
-      accessLogStream = createWriteStream(
-        path.join(__dirname, options.fileName),
-        {
-          flags: "a",
-        }
-      );
+  const _createLoggingStream = () => {
+    let accessLogStream;
+    if (type === "file") {
+      if (options.rotateFiles) {
+        accessLogStream = createStream(options.fileName, {
+          interval: options.interval,
+          path: path.resolve(filepath),
+        });
+      } else {
+        accessLogStream = createWriteStream(
+          `${path.resolve(filepath)}/${options.fileName}`,
+          {
+            flags: "a",
+          }
+        );
+      }
+      return accessLogStream;
     }
-    return morgan(options.format, { stream: accessLogStream });
-  }
+  };
+
+  return morgan(options.format, {
+    stream: {
+      write(line) {
+        const stream = _createLoggingStream();
+        stream.write(line);
+        stream.end();
+      },
+    },
+  });
 };
 
 module.exports = accessLogger;

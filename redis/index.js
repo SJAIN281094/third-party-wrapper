@@ -20,7 +20,6 @@ const methods = require("./methods");
 const config = require("../config");
 
 const defaultReconnectStrategy = function (retries) {
-  console.log("Redis retry count:", retries);
   return Math.min(retries * 200, 5000);
 };
 

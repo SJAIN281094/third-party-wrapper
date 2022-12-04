@@ -5,6 +5,12 @@ const config = {
     password: "",
   },
   RABBITMQ_CONNECTION_URL: "amqp://user:password@localhost:5672?heartbeat=60",
+  ZOHO: {
+    host: "smtp.zoho.in",
+    port: 465,
+    username: "er.sjain218@gmail.com",
+    password: "zoho@1234",
+  },
 };
 
 module.exports = config;

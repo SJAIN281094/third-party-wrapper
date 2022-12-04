@@ -15,7 +15,7 @@
  * 3. Use ':' to separate diffrent part of key
  */
 
-const redis = require("redis");
+const Redis = require("redis");
 const methods = require("./methods");
 const config = require("../config");
 
@@ -64,4 +64,4 @@ const redisIO = (redis) => {
   return { connect };
 };
 
-module.exports = redisIO(redis);
+module.exports = redisIO(Redis);

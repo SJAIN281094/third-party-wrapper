@@ -1,14 +1,14 @@
 function getSupportedActions() {
-  return ["send"];
+  return ["verify", "update"];
 }
 
 const { v4: uuidv4 } = require("uuid");
 
 const Queues = {
-  EVENT_PROCESSOR: {
-    queueName: "eventProcessor",
+  EVENTS: {
+    queueName: "EVENTS",
     supportedActions: getSupportedActions(),
-    getMessageObject: (actor, action, object, target) => {
+    getMessageObject: (actor, action, object, target, loggerContext) => {
       if (!actor || typeof actor !== "object") {
         throw new Error("Actor cannot be null");
       }
@@ -35,13 +35,18 @@ const Queues = {
         throw new Error(`Unsupported action ${action}`);
       }
 
+      if (!loggerContext) {
+        throw new Error("loggerContext is required");
+      }
+
       return {
-        eventId: uuidv4(),
         actor,
         action,
         object,
         target,
+        eventId: uuidv4(),
         createdAt: new Date().toISOString(),
+        loggerContext,
       };
     },
   },

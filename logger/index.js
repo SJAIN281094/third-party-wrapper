@@ -1,8 +1,8 @@
 const { createLogger, transports, format } = require("winston");
+const { v4: uuidv4 } = require("uuid");
 const fs = require("fs");
 const path = require("path");
 
-const env = process.env.NODE_ENV;
 const logDir = path.resolve(`./log`);
 
 if (!fs.existsSync(logDir)) {
@@ -12,35 +12,38 @@ if (!fs.existsSync(logDir)) {
 const customFormat = format.combine(
   format.timestamp(),
   format.json(),
-  format.colorize(),
   format.simple()
 );
 
-const logger = createLogger({
-  level: "info",
-  format: customFormat,
-  defaultMeta: {
-    date: new Date(),
-  },
-  transports: [
-    new transports.File({
-      filename: `${logDir}/error.log`,
-      level: "error",
-    }),
-    new transports.File({
-      filename: `${logDir}/info.log`,
+let loggerContext = {};
+
+const Logger = {
+  getInstance: (props = {}) => {
+    loggerContext = {
+      date: new Date(),
+      "x-request-id": uuidv4(),
+      ...props.loggerContext,
+    };
+
+    delete props.loggerContext;
+
+    const logger = createLogger({
       level: "info",
-    }),
-  ],
-  silent: false,
-});
+      format: customFormat,
+      defaultMeta: {
+        ...loggerContext,
+        ...props,
+      },
+      transports: [new transports.Console()],
+      silent: false,
+    });
 
-if (env !== "production") {
-  logger.add(
-    new transports.Console({
-      format: format.combine(format.colorize(), format.simple()),
-    })
-  );
-}
+    logger.getContext = () => {
+      return loggerContext;
+    };
 
-module.exports = logger;
+    return logger;
+  },
+};
+
+module.exports = Logger;

@@ -1,4 +1,4 @@
-const logger = require("../logger");
+const Logger = require("../logger");
 const {
   handlers,
   prefetch,
@@ -8,11 +8,13 @@ const {
 
 let channel = null;
 let client = null;
+let logger = {};
 const rabbitClients = [];
 
 const methods = {
   initialize: (_client) => {
     client = _client;
+    logger = Logger.getInstance();
   },
 
   _onConnectionError: function (error) {
@@ -119,6 +121,7 @@ const methods = {
     options = {},
     queueProperties = {}
   ) {
+    const logger = Logger.getInstance({ loggerContext: message.loggerContext });
     try {
       channel = await this.getChannel();
       await channel.assertQueue(queueName, {

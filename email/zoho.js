@@ -2,12 +2,13 @@ const nodeMailer = require("nodemailer");
 const config = require("../config");
 
 let transporter = nodeMailer.createTransport({
-  host: config.ZOHO.host,
-  secure: config.ZOHO.port,
-  port: 465,
+  name: config.EMAIL_SERVER.ZOHO.name,
+  host: config.EMAIL_SERVER.ZOHO.host,
+  secure: config.EMAIL_SERVER.ZOHO.secure,
+  port: config.EMAIL_SERVER.ZOHO.port,
   auth: {
-    user: config.ZOHO.username,
-    pass: config.ZOHO.password,
+    user: config.EMAIL_SERVER.ZOHO.username,
+    pass: config.EMAIL_SERVER.ZOHO.password,
   },
 });
 

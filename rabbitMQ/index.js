@@ -62,17 +62,6 @@ const rabbitMQ = (amqplib) => {
     );
   }
 
-  // async function (queueName, message, options = {}) {
-  //   // By default message in rpc mode are not made persistent
-  //   // to make your message persistent send options.persistent = true
-  //   return Q.try(() => {
-  //     if (!publisherClient) {
-  //       throw new Error("publisher client is not setup");
-  //     }
-  //     return publisherClient.rpc(queueName, message, options);
-  //   });
-  // };
-
   return { connect, Queues, pushToQueue, listenQueue };
 };
 

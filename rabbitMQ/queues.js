@@ -1,5 +1,5 @@
 function getSupportedActions() {
-  return ["verify", "update"];
+  return ["verify", "update", "create"];
 }
 
 const { v4: uuidv4 } = require("uuid");

@@ -1,3 +1,14 @@
+const values = require("./values");
+const Logger = require("../logger");
+
+if (!values) {
+  const logger = Logger.getInstance();
+  logger.error("Env. variable not set");
+  process.exit(1);
+}
+
+logger.info("ENV_VALUES", values);
+
 const {
   RABBITMQ_HOST,
   RABBITMQ_USERNAME,
@@ -11,26 +22,7 @@ const {
   ZOHO_SECURE,
   ZOHO_USERNAME,
   ZOHO_PASSWORD,
-} = require("./values");
-const Logger = require("../logger");
-
-if (
-  !RABBITMQ_HOST ||
-  !RABBITMQ_USERNAME ||
-  !RABBITMQ_PASSWORD ||
-  !REDIS_HOST ||
-  !REDIS_PORT ||
-  !ZOHO_NAME ||
-  !ZOHO_HOST ||
-  !ZOHO_PORT ||
-  !ZOHO_SECURE ||
-  !ZOHO_USERNAME ||
-  !ZOHO_PASSWORD
-) {
-  const logger = Logger.getInstance();
-  logger.error("Env. variable not set");
-  process.exit(1);
-}
+} = values;
 
 const config = {
   REDIS: {

@@ -1,8 +1,8 @@
 const values = require("./values");
 const Logger = require("../logger");
+const logger = Logger.getInstance();
 
 if (!values) {
-  const logger = Logger.getInstance();
   logger.error("Env. variable not set");
   process.exit(1);
 }

@@ -1,7 +1,7 @@
 const { RABBITMQ_PASSWORD, RABBITMQ_USERNAME } = require("./values");
 const Logger = require("../logger");
 
-if (!RABBITMQ_USERNAME || !RABBITMQ_PASSWORD) {
+if (!RABBITMQ_USERNAME || !e) {
   const logger = Logger.getInstance();
   logger.error("Env variable not set");
   process.exit(1);

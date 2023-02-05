@@ -1,5 +1,5 @@
 const RABBITMQ_USERNAME = process.env.RABBITMQ_USERNAME;
-const RABBITMQ_PASSWORD = process.env.RABBITMQ_PASSWORD;
+const RABBITMQ_PASSWORD = process.env.RABBITMQ_PASSKEY;
 
 module.exports = {
   RABBITMQ_USERNAME,

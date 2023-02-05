@@ -1,15 +1,15 @@
-const RABBITMQ_HOST = "localhost:5672";
-const RABBITMQ_USERNAME = "guest";
-const RABBITMQ_PASSWORD = "guest";
-const REDIS_HOST = "localhost";
-const REDIS_PORT = 6479;
-const REDIS_PASSWORD = "";
-const ZOHO_NAME = "linode";
-const ZOHO_HOST = "smtp.zoho.in";
-const ZOHO_PORT = 465;
-const ZOHO_SECURE = true;
-const ZOHO_USERNAME = "er.sjain28@gmail.com";
-const ZOHO_PASSWORD = "zoho@1234";
+const RABBITMQ_HOST = process.env.RABBITMQ_HOST;
+const RABBITMQ_USERNAME = process.env.RABBITMQ_USERNAME;
+const RABBITMQ_PASSWORD = process.env.RABBITMQ_PASSWORD;
+const REDIS_HOST = process.env.REDIS_HOST;
+const REDIS_PORT = process.env.REDIS_PORT;
+const REDIS_PASSWORD = process.env.REDIS_PASSWORD;
+const ZOHO_NAME = process.env.ZOHO_NAME;
+const ZOHO_HOST = process.env.ZOHO_HOST;
+const ZOHO_PORT = process.env.ZOHO_PORT;
+const ZOHO_SECURE = process.env.ZOHO_SECURE;
+const ZOHO_USERNAME = process.env.ZOHO_USERNAME;
+const ZOHO_PASSWORD = process.env.ZOHO_PASSWORD;
 
 module.exports = {
   RABBITMQ_HOST,

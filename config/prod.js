@@ -2,12 +2,10 @@ const values = require("./values");
 const Logger = require("../logger");
 const logger = Logger.getInstance();
 
-if (!values) {
+if (!Object.keys(values).length) {
   logger.error("Env. variable not set");
   process.exit(1);
 }
-
-logger.info("ENV_VALUES", values);
 
 const {
   RABBITMQ_HOST,

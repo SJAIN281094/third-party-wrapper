@@ -17,7 +17,7 @@ function methods({ channel, loggerContext }) {
         text: text,
       };
       if (channel === "zoho") {
-        return sendZohoMail(mailOptions);
+        return sendZohoMail(mailOptions, loggerContext);
       }
     };
     return { sendMail };

@@ -1,4 +1,5 @@
 const nodeMailer = require("nodemailer");
+const Logger = require("../logger");
 const config = require("../config");
 
 let transporter = nodeMailer.createTransport({
@@ -12,9 +13,12 @@ let transporter = nodeMailer.createTransport({
   },
 });
 
-const sendZohoMail = async (mailOptions) => {
+const sendZohoMail = async (mailOptions, loggerContext) => {
   try {
-    return await transporter.sendMail(mailOptions);
+    const logger = Logger.getInstance({ loggerContext });
+    const mailInfo = await transporter.sendMail(mailOptions);
+    logger.info("Email sent successfully");
+    return mailInfo;
   } catch (err) {
     throw err;
   }

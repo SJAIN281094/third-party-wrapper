@@ -1,27 +1,52 @@
-const { RABBITMQ_PASSWORD, RABBITMQ_USERNAME } = require("./values");
+const {
+  RABBITMQ_HOST,
+  RABBITMQ_USERNAME,
+  RABBITMQ_PASSWORD,
+  REDIS_HOST,
+  REDIS_PORT,
+  REDIS_PASSWORD,
+  ZOHO_NAME,
+  ZOHO_HOST,
+  ZOHO_PORT,
+  ZOHO_SECURE,
+  ZOHO_USERNAME,
+  ZOHO_PASSWORD,
+} = require("./values");
 const Logger = require("../logger");
 
-if (!RABBITMQ_USERNAME || !RABBITMQ_PASSWORD) {
+if (
+  !RABBITMQ_HOST ||
+  !RABBITMQ_USERNAME ||
+  !RABBITMQ_PASSWORD ||
+  !REDIS_HOST ||
+  !REDIS_PORT ||
+  !ZOHO_NAME ||
+  !ZOHO_HOST ||
+  !ZOHO_PORT ||
+  !ZOHO_SECURE ||
+  !ZOHO_USERNAME ||
+  !ZOHO_PASSWORD
+) {
   const logger = Logger.getInstance();
-  logger.error("Env variable not set");
+  logger.error("Env. variable not set");
   process.exit(1);
 }
 
 const config = {
   REDIS: {
-    host: "localhost",
-    post: 6379,
-    password: "",
+    host: REDIS_HOST,
+    post: REDIS_PORT,
+    password: REDIS_PASSWORD,
   },
-  RABBITMQ_CONNECTION_URL: `amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@rabbitmq-api.hiringseed.com?heartbeat=60`,
+  RABBITMQ_CONNECTION_URL: `amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@${RABBITMQ_HOST}?heartbeat=60`,
   EMAIL_SERVER: {
     ZOHO: {
-      name: "linode",
-      host: "smtp.zoho.in",
-      port: 465,
-      secure: true,
-      username: "er.sjain28@gmail.com",
-      password: "zoho@1234",
+      name: ZOHO_NAME,
+      host: ZOHO_HOST,
+      port: ZOHO_PORT,
+      secure: ZOHO_SECURE,
+      username: ZOHO_USERNAME,
+      password: ZOHO_PASSWORD,
     },
   },
 };

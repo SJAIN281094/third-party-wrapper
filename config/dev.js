@@ -1,6 +1,6 @@
 const config = {
   REDIS: {
-    host: "http://redis.redis.svc.cluster.local:6379",
+    host: "localhost",
     post: 6379,
     password: "",
   },

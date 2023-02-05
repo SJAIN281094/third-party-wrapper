@@ -1,10 +1,19 @@
+const { RABBITMQ_PASSWORD, RABBITMQ_USERNAME } = require("./values");
+const Logger = require("../logger");
+
+if (!RABBITMQ_USERNAME || !RABBITMQ_PASSWORD) {
+  const logger = Logger.getInstance();
+  logger.error("Env variable not set");
+  process.exit(1);
+}
+
 const config = {
   REDIS: {
-    host: "127.0.0.1",
+    host: "localhost",
     post: 6379,
     password: "",
   },
-  RABBITMQ_CONNECTION_URL: "amqp://guest:guest@localhost:5672?heartbeat=60",
+  RABBITMQ_CONNECTION_URL: `amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@rabbitmq-api.hiringseed.com?heartbeat=60`,
   EMAIL_SERVER: {
     ZOHO: {
       name: "linode",

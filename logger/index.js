@@ -12,7 +12,15 @@ if (!fs.existsSync(logDir)) {
 const customFormat = format.combine(
   format.timestamp(),
   format.json(),
-  format.simple()
+  format.printf(({ level, message, label, timestamp, ...props }) => {
+    return JSON.stringify({
+      level,
+      timestamp,
+      "x-request-id": props["x-request-id"],
+      message,
+      ...props,
+    });
+  })
 );
 
 let loggerContext = {};
@@ -20,7 +28,6 @@ let loggerContext = {};
 const Logger = {
   getInstance: (props = {}) => {
     loggerContext = {
-      date: new Date(),
       "x-request-id": uuidv4(),
       ...props.loggerContext,
     };
@@ -28,7 +35,7 @@ const Logger = {
     delete props.loggerContext;
 
     const logger = createLogger({
-      level: "info",
+      level: "http",
       format: customFormat,
       defaultMeta: {
         ...loggerContext,

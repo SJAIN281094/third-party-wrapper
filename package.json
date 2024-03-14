@@ -1,7 +1,11 @@
 {
-  "name": "@hiring-seed/third-party-wrapper",
+  "name": "@hiringseed/third-party-wrapper",
   "version": "1.0.14",
   "description": "",
+  "engines" : { 
+    "npm" : ">=8.0.0 <9.0.0",
+    "node" : ">=18.0.0"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
